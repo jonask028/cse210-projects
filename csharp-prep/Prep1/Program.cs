@@ -6,8 +6,10 @@ class Program
     {
         string firstName;
         string lastName;
+
         Console.Write("Please enter your first name: ");
         firstName = Console.ReadLine();
+
         Console.Write("Please enter your last name: ");
         lastName = Console.ReadLine();
 
