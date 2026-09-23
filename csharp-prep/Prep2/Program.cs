@@ -33,7 +33,7 @@ class Program
         else
             letterGrade = "F";
 
-        if (grade % 10 < 3 && grade != 100)
+        if (grade % 10 < 3 && grade != 100 || grade < 67)
             gradeQuality = "-";
         else if (grade % 10 > 3 && grade % 10 < 7)
             gradeQuality = "";
