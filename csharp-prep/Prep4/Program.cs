@@ -5,32 +5,32 @@ class Program
     static void Main(string[] args)
     {
         List<int> nums = [];
-        int num;
+        int userNum;
         Console.WriteLine("Enter a list of numbers, type 0 when finished.");
         do
         {
             Console.Write("Enter number: ");
             string input = Console.ReadLine();
-            if (!int.TryParse(input, out num))
+            if (!int.TryParse(input, out userNum))
             {
                 Console.WriteLine($"{input} is not a number!");
             }
-            nums.Add(num);
-        } while (num != 0);
+            nums.Add(userNum);
+        } while (userNum != 0);
         nums.Remove(0);
         int sumOfNums = 0;
-        foreach (int item in nums)
+        foreach (int num in nums)
         {
-            sumOfNums += item;
+            sumOfNums += num;
         }
         float averageNum = sumOfNums / (float)nums.Count;
         int largestNum = nums.Max();
         int smallestPosNum = largestNum;
-        foreach (int item in nums)
+        foreach (int num in nums)
         {
-            if (item < largestNum)
+            if (num < largestNum)
             {
-                smallestPosNum = item;
+                smallestPosNum = num;
             }
         }
         Console.WriteLine($"Sum: {sumOfNums}");
