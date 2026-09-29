@@ -25,6 +25,7 @@ class Program
         {
             _name = "Jonas Kennedy"
         };
+
         resume1._jobs.AddRange(job1, job2);
 
         resume1.Display();
