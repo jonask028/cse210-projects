@@ -38,7 +38,10 @@ class Program
         // }
 
         List<string> itemList = ["Betty", "And", "The", "Jets"];
-        itemList.Prepend("Buh");
+        for (int i = 0; i < 3; i++)
+        {
+            itemList.Insert(0, "Buh");
+        }
 
         foreach (string item in itemList)
             Console.WriteLine(item);
