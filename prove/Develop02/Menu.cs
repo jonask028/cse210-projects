@@ -3,6 +3,7 @@ class Menu
   public int ProcessMenu()
   {
     bool done = false;
+    Journal journal = null;
 
     do
     {
@@ -27,19 +28,29 @@ class Menu
           Console.WriteLine($"{input} is not a valid response");
         }
       }
+      if (journal == null)
+      {
+        journal = new();
+        journal.CreateJournal();
+      }
       switch (option)
       {
         case 1:
-          Console.WriteLine("Create");
+          Console.WriteLine("Write");
+          JournalEntry newEntry = new();
+          journal.AddEntry(newEntry);
           break;
         case 2:
           Console.WriteLine("Display");
+          journal.Display();
           break;
         case 3:
           Console.WriteLine("Save");
+          journal.SaveJournal();
           break;
         case 4:
-          Console.WriteLine("Read");
+          Console.WriteLine("Load");
+          journal = LoadJournal();
           break;
       }
 
@@ -47,4 +58,28 @@ class Menu
 
     return 1;
   }
+
+  public Journal LoadJournal()
+  {
+    Console.WriteLine("Enter the filename for your journal");
+    string filename = Console.ReadLine();
+    string[] lines = File.ReadAllLines(filename);
+    Journal loadJournal = new();
+    loadJournal.CreateJournal();
+    foreach (string line in lines)
+    {
+      Console.WriteLine(line);
+      JournalEntry newEntry = new();
+      string[] parts = line.Split("#");
+      if (parts.Length == 3)
+      {
+        newEntry._date = DateTime.Parse(parts[0][0..^1]);
+        newEntry._prompt = parts[1];
+        newEntry._content = parts[2];
+      }
+      loadJournal._entries.Add(newEntry);
+    }
+    return loadJournal;
+  }
+
 }

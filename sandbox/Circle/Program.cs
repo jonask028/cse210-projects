@@ -4,10 +4,7 @@
   {
     Console.WriteLine("Hello Circle World!");
 
-    Circle myCircle = new()
-    {
-      _radius = 10
-    };
+    Circle myCircle = new(-5);
 
     double area = myCircle.GetArea();
     Console.WriteLine(area);
