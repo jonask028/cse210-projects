@@ -63,7 +63,7 @@ class Menu
   {
     Console.WriteLine("Enter the filename for your journal");
     string filename = Console.ReadLine();
-    string[] lines = File.ReadAllLines(filename);
+    string[] lines = File.ReadAllLines($"journals/{filename}");
     Journal loadJournal = new();
     loadJournal.CreateJournal();
     foreach (string line in lines)

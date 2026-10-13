@@ -26,7 +26,7 @@ class Journal
   {
     Console.WriteLine("Enter a filename for your journal");
     string filename = Console.ReadLine();
-    using StreamWriter outputFile = new(filename);
+    using StreamWriter outputFile = new($"journals/{filename}");
     foreach (JournalEntry entry in _entries)
     {
       entry.SaveEntry(outputFile);
