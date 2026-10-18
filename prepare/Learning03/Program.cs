@@ -8,7 +8,7 @@ class Program
         Fraction fraction1 = new();
         Fraction fraction2 = new(6);
         Fraction fraction3 = new(6, 7);
-        Console.WriteLine($"{fraction1.GetFractionString()}, {fraction2.GetFractionString()}, {fraction3.GetFractionString()}");
+        Console.WriteLine($"Fraction 1 - {fraction1.GetFractionString()}: {fraction1.GetDecimalValue()},\nFraction 2 - {fraction2.GetFractionString()}: {fraction2.GetDecimalValue()},\nFraction 3 - {fraction3.GetFractionString()}: {fraction3.GetDecimalValue()}");
 
 
         for (int i = 0; i < 20; i++)
