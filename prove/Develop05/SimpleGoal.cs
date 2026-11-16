@@ -1,15 +1,30 @@
-class SimpleGoal(string name, string description, int points) : BaseGoal(name, description, points)
+class SimpleGoal(string name, string description, double points) : BaseGoal(name, description, points, "simple")
 {
-  private bool _isComplete = false;
+  private bool _completed = false;
 
-  public override int CompleteGoal()
+  public override double CompleteGoal()
   {
-    _isComplete = true;
+    _completed = true;
     return _points;
   }
 
-  public override void DisplayGoal()
+  public override string GetDisplayString()
   {
-    Console.WriteLine($"[{(_isComplete ? "X" : " ")}] {_name}: {_description} - Points: {_points}");
+    return $"[{(_completed ? "X" : " ")}] - {base.GetDisplayString()}";
+  }
+
+  public override string GetSaveString()
+  {
+    return $"{base.GetSaveString()}###{_completed}";
+  }
+
+  public override double GetScore()
+  {
+    return _completed ? _points : 0.0;
+  }
+
+  public override int GetCompleted()
+  {
+    return _completed ? 1 : 0;
   }
 }
