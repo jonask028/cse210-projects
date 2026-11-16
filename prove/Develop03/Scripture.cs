@@ -118,7 +118,7 @@ class Scripture
 
   public void SaveScripture()
   {
-    using StreamWriter outputFile = new($"../../../scriptures/{_reference.GetScriptureReferenceString()}.txt");
+    using StreamWriter outputFile = new($"../../../scriptures/{_reference.GetScriptureReferenceSaveString()}.txt");
     _reference.SaveReference(outputFile);
     foreach (Word word in _words)
     {

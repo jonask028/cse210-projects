@@ -58,5 +58,20 @@ class ScriptureReference
     }
   }
 
+  public string GetScriptureReferenceSaveString()
+  {
+    if (_verses.Count == 1)
+    {
+      return $"{_bookName} {_chapter}_{_verses[0]}";
+    }
+    else if (_verses.Count > 1)
+    {
+      return $"{_bookName} {_chapter}_{_verses[0]}-{_verses[^1]}";
+    }
+    else
+    {
+      return "Reference has no verses";
+    }
+  }
 
 }
