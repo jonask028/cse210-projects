@@ -16,7 +16,7 @@ class GoalList()
   }
   public void SaveGoals(string filename)
   {
-    using StreamWriter _outputFile = new($"./goals/{filename}.txt");
+    using StreamWriter _outputFile = new($"../../../goals/{filename}.txt");
     foreach (BaseGoal goal in _goals)
     {
       string saveString = goal.GetSaveString();
@@ -27,7 +27,7 @@ class GoalList()
   public void LoadGoals(string filename)
   {
     _goals = [];
-    string[] lines = File.ReadAllLines($"./goals/{filename}.txt");
+    string[] lines = File.ReadAllLines($"../../../goals/{filename}.txt");
     foreach (string line in lines)
     {
       string[] goalDetails = line.Split("###");

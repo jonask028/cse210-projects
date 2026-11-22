@@ -49,7 +49,7 @@ class Menu
         case 4:
           if (goals.Count < 1)
           {
-            Console.WriteLine("No goals currently loaded, please create or load goals");
+            RunSpinnerMessage("No goals currently loaded, please create or load goals", 3);
             break;
           }
           ProcessGoalsMenu();
