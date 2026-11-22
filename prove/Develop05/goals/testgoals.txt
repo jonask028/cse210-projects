@@ -1,0 +1,5 @@
+simple###test###test###100###True
+eternal###eternaltest###eternal###25###4
+simple###simplegoal###simple###100###False
+checklist###checklist###check###150###7###3
+eternal###Read Scriptures###Read scriptures daily###50###0

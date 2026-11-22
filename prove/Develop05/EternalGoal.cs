@@ -1,6 +1,6 @@
-class EternalGoal(string name, string description, double points) : BaseGoal(name, description, points, "eternal")
+class EternalGoal(string name, string description, double points, int numCompletions = 0) : BaseGoal(name, description, points, "eternal")
 {
-  private int _numCompletions = 0;
+  private int _numCompletions = numCompletions;
 
   public override double CompleteGoal()
   {
@@ -10,7 +10,7 @@ class EternalGoal(string name, string description, double points) : BaseGoal(nam
 
   public override string GetDisplayString()
   {
-    return $"Completed {_numCompletions} times - {base.GetDisplayString()}";
+    return $"Completed {_numCompletions} times | {base.GetDisplayString()}";
   }
 
   public override string GetSaveString()
@@ -23,7 +23,7 @@ class EternalGoal(string name, string description, double points) : BaseGoal(nam
     return _numCompletions * _points;
   }
 
-  public override int GetCompleted()
+  public override double GetCompleted()
   {
     return _numCompletions;
   }

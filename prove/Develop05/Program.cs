@@ -4,11 +4,25 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop05 World!");
+        Menu newMenu = new();
+        newMenu.ProcessMainMenu();
+    }
 
-        SimpleGoal newSimpleGoal = new("Go to Class", "Get to your CSE210 class on time!", 100);
-        newSimpleGoal.DisplayGoal();
-        newSimpleGoal.CompleteGoal();
-        newSimpleGoal.DisplayGoal();
+    public static int ParseInt(string intString)
+    {
+        if (!int.TryParse(intString, out int num))
+        {
+            throw new ArgumentException(message: "Required completions is not type int");
+        }
+        return num;
+    }
+
+    public static double ParseDouble(string doubleString)
+    {
+        if (!double.TryParse(doubleString, out double num))
+        {
+            throw new ArgumentException(message: "Required completions is not type double");
+        }
+        return num;
     }
 }

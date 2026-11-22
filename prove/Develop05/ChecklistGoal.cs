@@ -1,7 +1,7 @@
-class ChecklistGoal(string name, string description, double points, int requiredCompletions) : BaseGoal(name, description, points, "checklist")
+class ChecklistGoal(string name, string description, double points, int requiredCompletions, int numCompletions = 0) : BaseGoal(name, description, points, "checklist")
 {
   private readonly int _requiredCompletions = requiredCompletions;
-  private int _numCompletions;
+  private int _numCompletions = numCompletions;
 
   public override double CompleteGoal()
   {
@@ -22,7 +22,7 @@ class ChecklistGoal(string name, string description, double points, int required
 
   public override string GetDisplayString()
   {
-    return $"Completed {_numCompletions} of {_requiredCompletions} times - {base.GetDisplayString()}";
+    return $"Completed {_numCompletions} of {_requiredCompletions} times | {base.GetDisplayString()}";
   }
 
   public override string GetSaveString()
@@ -46,8 +46,9 @@ class ChecklistGoal(string name, string description, double points, int required
     }
   }
 
-  public override int GetCompleted()
+  public override double GetCompleted()
   {
-    return _numCompletions > 0 ? _numCompletions / _requiredCompletions : 0;
+    double completionScore = _numCompletions > 0 ? _numCompletions * 1.0 / _requiredCompletions : 0;
+    return completionScore;
   }
 }

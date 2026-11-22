@@ -8,7 +8,7 @@ abstract class BaseGoal(string name, string description, double points, string g
   public abstract double CompleteGoal();
   public abstract double GetScore();
 
-  public abstract int GetCompleted();
+  public abstract double GetCompleted();
 
   public virtual string GetDisplayString()
   {

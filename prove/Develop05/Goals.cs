@@ -8,41 +8,72 @@ class GoalList()
   {
     _goals.Add(goal);
   }
+
+  public void CompleteGoal(int goalIndex)
+  {
+    BaseGoal goal = _goals[goalIndex];
+    goal.CompleteGoal();
+  }
   public void SaveGoals(string filename)
   {
-    StreamWriter _outputFile = new($"../../../goals/{filename}.txt");
+    using StreamWriter _outputFile = new($"./goals/{filename}.txt");
     foreach (BaseGoal goal in _goals)
     {
-      _outputFile.WriteLine(goal.GetSaveString());
+      string saveString = goal.GetSaveString();
+      _outputFile.WriteLine(saveString);
     }
   }
 
   public void LoadGoals(string filename)
   {
-    string[] lines = File.ReadAllLines($"../../../{filename}.txt");
+    _goals = [];
+    string[] lines = File.ReadAllLines($"./goals/{filename}.txt");
     foreach (string line in lines)
     {
       string[] goalDetails = line.Split("###");
       string goalType = goalDetails[0];
-      if (goalDetails[1..^1] is [string name, string description, string pointString])
+      switch (goalType)
       {
-        if (!double.TryParse(pointString, out double points))
-        {
-          throw new ArgumentException(message: "Points are not type double");
-        }
-        switch (goalType)
-        {
-          case "simple":
-            SimpleGoal newSimpleGoal = new(name, description, points);
-            break;
-          case "eternal":
-            SimpleGoal newEternalGoal = new(name, description, points);
-            break;
-          case "checklist":
-            SimpleGoal newChecklistGoal = new(name, description, points);
-            break;
-
-        }
+        case "simple":
+          if (goalDetails[1..^0] is [string simpleName, string simpleDescription, string simplePointString, string completedString])
+          {
+            double simplePoints = Program.ParseDouble(simplePointString);
+            bool completed = completedString == "True";
+            SimpleGoal newSimpleGoal = new(simpleName, simpleDescription, simplePoints, completed);
+            if (completed)
+            {
+              newSimpleGoal.CompleteGoal();
+            }
+            _goals.Add(newSimpleGoal);
+          }
+          break;
+        case "eternal":
+          if (goalDetails[1..^0] is [string eternalName, string eternalDescription, string eternalPointString, string eternalNumCompletionString])
+          {
+            double eternalPoints = Program.ParseDouble(eternalPointString);
+            int eternalNumCompletions = Program.ParseInt(eternalNumCompletionString);
+            EternalGoal newEternalGoal = new(eternalName, eternalDescription, eternalPoints);
+            for (int i = 0; i < eternalNumCompletions; i++)
+            {
+              newEternalGoal.CompleteGoal();
+            }
+            _goals.Add(newEternalGoal);
+          }
+          break;
+        case "checklist":
+          if (goalDetails[1..^0] is [string checklistName, string checklistDescription, string checklistPointString, string checklistRequiredCompletionString, string checklistCurrentCompletionString])
+          {
+            double checklistPoints = Program.ParseDouble(checklistPointString);
+            int checklistRequiredCompletions = Program.ParseInt(checklistRequiredCompletionString);
+            int checklistCurrentCompetions = Program.ParseInt(checklistCurrentCompletionString);
+            ChecklistGoal newChecklistGoal = new(checklistName, checklistDescription, checklistPoints, checklistRequiredCompletions);
+            for (int i = 0; i < checklistCurrentCompetions; i++)
+            {
+              newChecklistGoal.CompleteGoal();
+            }
+            _goals.Add(newChecklistGoal);
+          }
+          break;
       }
     }
   }
@@ -50,6 +81,27 @@ class GoalList()
   public List<BaseGoal> GetGoals()
   {
     return _goals;
+  }
+  public void DisplayGoals(bool completed = false)
+  {
+    if (!completed)
+    {
+
+      foreach (BaseGoal goal in _goals)
+      {
+        int goalNumber = _goals.IndexOf(goal) + 1;
+        Console.WriteLine($"{goalNumber}: {goal.GetDisplayString()}");
+      }
+    }
+    else
+    {
+      List<BaseGoal> completedGoals = GetCompleted();
+      foreach (BaseGoal goal in completedGoals)
+      {
+        int goalNumber = _goals.IndexOf(goal) + 1;
+        Console.WriteLine($"{goalNumber}. {goal.GetDisplayString()}");
+      }
+    }
   }
 
   public double GetScore()
@@ -73,7 +125,10 @@ class GoalList()
     foreach (BaseGoal goal in _goals)
     {
       double goalCompletion = goal.GetCompleted();
-      completedGoals.Add(goalCompletion > 0 ? goal : null);
+      if (goalCompletion > 0)
+      {
+        completedGoals.Add(goal);
+      }
       _numGoalsCompleted += goalCompletion;
     }
     return completedGoals;
